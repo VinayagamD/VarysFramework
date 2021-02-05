@@ -20,7 +20,7 @@ import akka.util.Timeout
 import jakarta.servlet.http.HttpServletRequest
 import org.eclipse.jetty.server.{Handler, Server}
 import varys.framework.slave.SlaveActor
-import varys.ui.JettyUtils.createStaticHandler
+import varys.ui.JettyUtils._
 import varys.ui.{JettyUtils, UIUtils}
 import varys.{Logging, Utils}
 

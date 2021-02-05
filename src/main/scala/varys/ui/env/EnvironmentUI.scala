@@ -9,6 +9,7 @@ import scala.concurrent.JavaConversions
 import scala.collection.convert.ImplicitConversions.`properties AsScalaMap`
 import scala.util.Properties
 import scala.xml.Node
+import varys.ui.JettyUtils._
 
 private[varys] class EnvironmentUI {
   def getHandlers: Seq[(String, Handler)] = Seq[(String, Handler)](

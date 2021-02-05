@@ -1,13 +1,16 @@
 package varys.framework
 
+import net.liftweb.json.JsonAST.JValue
+import net.liftweb.json.JsonDSL
+import net.liftweb.json.JsonDSL._
+import varys.framework.master.{ClientInfo, CoflowInfo, SlaveInfo}
+
 import net.liftweb.json.JsonDSL._
 
 import varys.framework.master.{ClientInfo, CoflowInfo, SlaveInfo}
 
 private[varys] object JsonProtocol {
-
-
-  def writeSlaveInfo(obj: SlaveInfo):A = {
+  def writeSlaveInfo(obj: SlaveInfo) = {
     ("id" -> obj.id) ~
       ("host" -> obj.host) ~
       ("port" -> obj.port) ~
@@ -38,11 +41,11 @@ private[varys] object JsonProtocol {
   }
 
   def writeMasterState(obj: MasterState) = {
-    JsonDSL.jobject2assoc(("url" -> ("varys://" + obj.uri)) ~
-      ("slaves" -> (obj.slaves.toList map writeSlaveInfo)) ~
-      ("activecoflows" -> obj.activeCoflows.toList.map(writeCoflowInfo))) ~
+    ("url" -> ("varys://" + obj.uri)) ~
+      ("slaves" -> obj.slaves.toList.map(writeSlaveInfo)) ~
+      ("activecoflows" -> obj.activeCoflows.toList.map(writeCoflowInfo)) ~
       ("completedcoflows" -> obj.completedCoflows.toList.map(writeCoflowInfo)) ~
-      ("activeclients" -> (obj.activeClients.toList map writeClientInfo))
+      ("activeclients" -> obj.activeClients.toList.map(writeClientInfo))
   }
 
   def writeSlaveState(obj: SlaveState) = {

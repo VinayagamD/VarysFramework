@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest
 import org.eclipse.jetty.server.{Handler, Server}
 import varys.{Logging, Utils}
 import varys.ui.JettyUtils
-import varys.ui.JettyUtils.createStaticHandler
+import varys.ui.JettyUtils._
 
 import scala.concurrent.duration.Duration
 

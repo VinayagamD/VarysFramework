@@ -1,6 +1,7 @@
 package varys.framework.slave.ui
 
 import akka.pattern.ask
+import jakarta.servlet.http.HttpServletRequest
 import net.liftweb.json.JsonAST.JValue
 import varys.framework.{JsonProtocol, RequestSlaveState, SlaveState}
 import varys.ui.UIUtils
@@ -12,8 +13,6 @@ import varys.framework.JsonProtocol
 import varys.framework.{RequestSlaveState, SlaveState}
 import varys.ui.UIUtils
 import varys.Utils
-
-import javax.servlet.http.HttpServletRequest
 
 private[varys] class IndexPage(parent: SlaveWebUI) {
   val slaveActor = parent.slave.self
