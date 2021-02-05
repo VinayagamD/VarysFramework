@@ -34,8 +34,10 @@ libraryDependencies += "org.slf4j" % "slf4j-log4j12" % "1.7.30" % Test
 libraryDependencies += "org.fusesource" % "sigar" % "1.6.4"
 // https://mvnrepository.com/artifact/com.esotericsoftware/kryo
 libraryDependencies += "com.esotericsoftware" % "kryo" % "5.0.3"
+
 // https://mvnrepository.com/artifact/io.altoo/akka-kryo-serialization
-libraryDependencies += "io.altoo" %% "akka-kryo-serialization" % "2.1.0-RC1"
+libraryDependencies += "io.altoo" %% "akka-kryo-serialization" % "1.0.0"
+
 
 
 

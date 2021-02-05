@@ -38,7 +38,7 @@
     <orderEntry type="library" name="sbt: com.typesafe.akka:akka-stream_2.13:2.6.12:jar" level="project" />
     <orderEntry type="library" name="sbt: com.typesafe:config:1.4.0:jar" level="project" />
     <orderEntry type="library" name="sbt: com.typesafe:ssl-config-core_2.13:0.4.2:jar" level="project" />
-    <orderEntry type="library" name="sbt: io.altoo:akka-kryo-serialization_2.13:2.1.0-RC1:jar" level="project" />
+    <orderEntry type="library" name="sbt: io.altoo:akka-kryo-serialization_2.13:1.0.0:jar" level="project" />
     <orderEntry type="library" name="sbt: io.netty:netty-all:4.1.58.Final:jar" level="project" />
     <orderEntry type="library" name="sbt: log4j:log4j:1.2.17:jar" level="project" />
     <orderEntry type="library" name="sbt: net.java.dev.jna:jna:5.3.1:jar" level="project" />
@@ -52,10 +52,10 @@
     <orderEntry type="library" name="sbt: org.eclipse.jetty:jetty-util:11.0.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.fusesource:sigar:1.6.4:jar" level="project" />
     <orderEntry type="library" name="sbt: org.jline:jline:3.16.0:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.lz4:lz4-java:1.7.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.lz4:lz4-java:1.6.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.objenesis:objenesis:3.1:jar" level="project" />
     <orderEntry type="library" name="sbt: org.reactivestreams:reactive-streams:1.0.3:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-collection-compat_2.13:2.3.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-collection-compat_2.13:2.1.2:jar" level="project" />
     <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-java8-compat_2.13:0.9.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-parallel-collections_2.13:1.0.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-parser-combinators_2.13:1.1.2:jar" level="project" />

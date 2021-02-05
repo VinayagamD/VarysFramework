@@ -261,7 +261,7 @@ private[varys] object Slave {
     val args = new SlaveArguments(argStrings)
     val (actorSystem, _) = startSystemAndActor(args.ip, args.port, args.webUiPort, args.commPort,
       args.master, args.workDir)
-    Await.ready(actorSystem.whenTerminated, 1.minutes)
+    Await.ready(actorSystem.whenTerminated, 5.minutes)
   }
 
   /**

@@ -566,7 +566,7 @@ private[varys] object Master {
     val args = new MasterArguments(argStrings)
     val masterObj = new Master(systemName, actorName, args.ip, args.port, args.webUiPort)
     val (actorSystem, _) = masterObj.start()
-    Await.ready(actorSystem.whenTerminated, 1.minutes)
+    Await.ready(actorSystem.whenTerminated, 5.minutes)
   }
 
   /**

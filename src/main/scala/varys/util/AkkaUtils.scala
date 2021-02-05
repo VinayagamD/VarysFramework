@@ -31,13 +31,13 @@ private[varys] object AkkaUtils {
       val lifecycleEvents = if (System.getProperty("varys.akka.logLifecycleEvents", "false").toBoolean) "on" else "off"
       val logRemoteEvents = if (System.getProperty("varys.akka.logRemoteEvents", "false").toBoolean) "on" else "off"
       val akkaWriteTimeout = System.getProperty("varys.akka.writeTimeout", "30").toInt
-
+//      extensions = ["com.romix.akka.serialization.kryo.KryoSerializationExtension$"]
       val akkaConf = ConfigFactory.parseString("""
       akka {
         daemonic = on
         jvm-exit-on-fatal-error = off
         loggers = ["akka.event.slf4j.Slf4jLogger"]
-        extensions = ["com.romix.akka.serialization.kryo.KryoSerializationExtension$"]
+
 
         actor {
           debug {
@@ -52,7 +52,7 @@ private[varys] object AkkaUtils {
 
           serializers {
             java = "akka.serialization.JavaSerializer"
-            kryo = "com.romix.akka.serialization.kryo.KryoSerializer"
+            kryo = "io.altoo.akka.serialization.kryo.KryoSerializer"
           }
 
           serialization-bindings {
