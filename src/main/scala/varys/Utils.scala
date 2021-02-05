@@ -23,7 +23,7 @@ private object Utils extends Logging {
     val oos = new ObjectOutputStream(bos)
     oos.writeObject(o)
     oos.close()
-    return bos.toByteArray
+    bos.toByteArray
   }
 
   /**
@@ -32,7 +32,7 @@ private object Utils extends Logging {
   def deserialize[T](bytes: Array[Byte]): T = {
     val bis = new ByteArrayInputStream(bytes)
     val ois = new ObjectInputStream(bis)
-    return ois.readObject.asInstanceOf[T]
+    ois.readObject.asInstanceOf[T]
   }
 
   /**
@@ -44,7 +44,7 @@ private object Utils extends Logging {
       override def resolveClass(desc: ObjectStreamClass) =
         Class.forName(desc.getName, false, loader)
     }
-    return ois.readObject.asInstanceOf[T]
+    ois.readObject.asInstanceOf[T]
   }
 
   def isAlpha(c: Char): Boolean = {

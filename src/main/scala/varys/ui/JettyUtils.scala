@@ -1,26 +1,46 @@
 package varys.ui
 
 import jakarta.servlet.http.{HttpServletRequest, HttpServletResponse}
-import org.eclipse.jetty.server.{Handler, HttpConfiguration, Request, Server}
+import net.liftweb.json.DefaultFormats
+import net.liftweb.json.JsonAST.{JValue, prettyRender}
 import org.eclipse.jetty.server.handler.{AbstractHandler, ContextHandler, HandlerList, ResourceHandler}
+import org.eclipse.jetty.server.{Handler, Request, Server, ServerConnector}
 import org.eclipse.jetty.util.thread.QueuedThreadPool
 import varys.Logging
 
 import scala.annotation.tailrec
+import scala.language.implicitConversions
+import scala.util.{Failure, Success, Try}
+import scala.xml.Node
 
 /** Utilities for launching a web server using Jetty's HTTP Server class */
 private[varys] object JettyUtils extends Logging{
+
+  implicit val formats: DefaultFormats.type = net.liftweb.json.DefaultFormats
   // Base type for a function that returns something based on an HTTP request. Allows for
   // implicit conversion from many types of functions to jetty Handlers.
   type Responder[T] = HttpServletRequest => T
 
-  def createHandler[T <% AnyRef] (responder: Responder[T], contentType: String,
-                                  extractFn: T => String = (in: Any) => in.toString): Handler ={
+  implicit def jValueToAnyRef(value: JValue): AnyRef = value.asInstanceOf[AnyRef]
+  implicit def sequenceNodeToAnyRef(value: Seq[Node]): AnyRef = value.asInstanceOf[AnyRef]
+
+  // Conversions from various types of Responder's to jetty Handlers
+  implicit def jsonResponderToHandler(responder: Responder[JValue]) : Handler =
+  createHandler(responder, "text/json", (in: JValue) => prettyRender(in))
+
+  implicit def htmlResponderToHandler(responder: Responder[Seq[Node]]): Handler =
+    createHandler(responder, "text/html", (in: Seq[Node]) => "<!DOCTYPE html>" + in.toString)
+
+  implicit def textResponderToHandler(responder: Responder[String]): Handler =
+    createHandler(responder, "text/plain")
+
+  def createHandler[T <% AnyRef](responder: Responder[T], contentType: String,
+                                   extractFn: T => String = (in: Any) => in.toString): Handler ={
     new AbstractHandler {
       override def handle(target: String,
                           baseRequest: Request,
                           request: HttpServletRequest,
-                          response: HttpServletResponse) = {
+                          response: HttpServletResponse): Unit = {
         response.setContentType("%s;charset=utf-8".format(contentType))
         response.setStatus(HttpServletResponse.SC_OK)
         baseRequest.setHandled(true)
@@ -37,7 +57,7 @@ private[varys] object JettyUtils extends Logging{
       override def handle(target: String,
                           baseRequest: Request,
                           request: HttpServletRequest,
-                          response: HttpServletResponse)={
+                          response: HttpServletResponse): Unit ={
         response.setStatus(302)
         response.setHeader("Location", baseRequest.getRootURL + newPath)
         baseRequest.setHandled(true)
@@ -80,8 +100,22 @@ private[varys] object JettyUtils extends Logging{
       pool.setDaemon(true)
       val server = new Server(pool)
       server.setHandler(handlerList)
-      val httpConfig = new HttpConfiguration
+      val connector = new ServerConnector(server)
+      connector.setHost(ip)
+      connector.setPort(currentPort)
+      server.addConnector(connector)
+
+      Try {server.start()} match {
+        case s: Success[_] =>
+          (server, server.getConnectors.head.asInstanceOf[ServerConnector].getLocalPort)
+        case f: Failure[_] =>
+          server.stop()
+          logInfo("Failed to create UI at port, %s. Trying again.".format(currentPort))
+          logInfo("Error was: " + f.toString)
+          connect((currentPort+1) % 65536)
+      }
 
     }
+    connect(port)
   }
 }
